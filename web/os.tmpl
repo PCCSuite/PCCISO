@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/style.css" rel="stylesheet" type="text/css" media="all">
+    <style>
+:root {
+    --theme-color: {{.Color}};
+}
+    </style>
+    <title>{{.OsName}} - PCCISO</title>
+</head>
+<body>
+    <h1>{{.OsName}}</h1>
+    {{if .Pinned}}
+    <h2>pinned</h2>
+    {{end}}
+    {{range .Pinned}}
+    <a href="{{.Path}}">
+        <div class="special">
+            <div class="special-filename">{{.Name}}</div>
+            <div>ファイルサイズ: {{.SizeString}}</div>
+            <div>取得日時: {{.GetTimeString}}</div>
+            <a class="special-hash hash"><span>SHA512: </span><input class="hash-value" value="{{.SHA512}}" readonly><img class="copy" src="/copy-icon.png"></a>
+        </div>
+    </a>
+    {{end}}
+
+    {{if .Latest}}
+    <h2>latest</h2>
+    {{end}}
+    {{range .Latest}}
+    <a href="{{.Path}}">
+        <div class="special">
+            <div class="special-filename">{{.Name}}</div>
+            <div>ファイルサイズ: {{.SizeString}}</div>
+            <div>取得日時: {{.GetTimeString}}</div>
+            <a class="special-hash hash"><span>SHA512: </span><input class="hash-value" value="{{.SHA512}}" readonly><img class="copy" src="/copy-icon.png"></a>
+        </div>
+    </a>
+    {{end}}
+
+    {{if .Versions}}
+    <h2>versions</h2>
+    {{end}}
+    <div class="versions">
+    {{range .Versions}}
+        <a class="version" href="{{.Id}}/" style="--os-back-color: {{.Color}}88; --os-hover-color: {{.Color}}aa;">
+            <img class="version-icon" src="{{.IconPath}}">
+            <div class="version-name">{{.Name}}</div>
+        </a>
+    {{end}}
+    </div>
+
+    <h2>files</h2>
+    <div class="table">
+        <div class="table-head">
+            <div class="table-row">
+                <div class="table-cell">名前</div>
+                <div class="table-cell" style="width: 80px;">サイズ</div>
+                <div class="table-cell" style="width: 120px;">取得日時</div>
+                <div class="table-cell">SHA512</div>
+            </div>
+        </div>
+        <div class="table-body">
+    {{range .Files}}
+            <div class="table-row">
+                <div class="table-cell"><a href="{{.Path}}">{{.Name}}</a></div>
+                <div class="table-cell"><a href="{{.Path}}">{{.SizeString}}</a></div>
+                <div class="table-cell"><a href="{{.Path}}">{{.GetTimeString}}</a></div>
+                <div class="table-cell hash"><input class="hash-value" value="{{.SHA512}}" readonly><img class="copy" src="/copy-icon.png"></div>
+            </div>
+    {{end}}
+        </div>
+    </div>
+    <script>
+        for (const hash of document.getElementsByClassName("hash")) {
+            hash.addEventListener("click", () => {
+                hash.getElementsByClassName("hash-value")[0].select();
+                document.execCommand("copy");
+            })
+        }
+    </script>
+</body>
+</html>

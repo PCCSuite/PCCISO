@@ -1,0 +1,171 @@
+:root {
+    --main-color: silver;
+    --back1-color: white;
+    --back2-color: whitesmoke;
+    --special-color: antiquewhite;
+}
+
+body {
+    width: 95%;
+}
+
+a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+.backcolor {
+    color: var(--back1-color);
+}
+
+.os {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    background-color: var(--os-back-color);
+}
+.os img {
+    width: 48px;
+    height: 48px;
+}
+.os-name {
+    font-size: xx-large;
+    font-family: 'Courier New', Courier, monospace;
+    /* font-family: monospace; */
+}
+
+.os:hover {
+    background-color: var(--os-hover-color);
+}
+
+.special {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    background-color: #fff2bf;
+}
+
+.special:hover {
+    background-color: #f0df9e;
+}
+
+.special-filename {
+    font-size: larger;
+}
+
+.special-hash {
+    display: flex;
+}
+
+.special-hash .hash-value {
+    flex: 1;
+}
+
+.versions {
+    display: flex;
+}
+
+.version {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    background-color: var(--os-back-color);
+}
+.version:hover {
+    background-color: var(--os-hover-color);
+}
+.version img {
+    width: 32px;
+}
+.version-name {
+    padding: 5px;
+    font-size: larger;
+    font-family: 'Courier New', Courier, monospace;
+    /* font-family: monospace; */
+}
+
+h1 {
+    border-left: 3px solid var(--theme-color);
+    padding: 10px;
+}
+
+h2 {
+    border-left: 3px solid var(--theme-color);
+    padding: 10px;
+}
+
+.table {
+    display: table;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: var(--back2-color);
+}
+
+.table-row {
+    display: table-row;
+}
+
+.table-head,.table-body {
+    display: table-row-group;
+}
+
+.table-cell {
+    vertical-align: middle;
+}
+
+.table-head .table-cell {
+    display: table-cell;
+    font-weight: normal;
+
+    padding: 10px;
+}
+
+.table-body .table-cell {
+    display: table-cell;
+    border-style: hidden solid;
+    border-width: 0px 1px;
+    border-color: var(--main-color);
+}
+
+.table-cell a {
+    display: block;
+
+    padding: 10px;
+}
+
+.table-body .table-row:hover .table-cell {
+    background-color: lightgray;
+}
+
+.hash {
+    overflow-wrap: anywhere;
+}
+
+.hash-value {
+    border: 0px;
+    background-color: inherit;
+    font: inherit;
+}
+
+.copy {
+    visibility: hidden;
+    /* float: right; */
+}
+
+:hover > .copy {
+    visibility: inherit;
+}
+
+input[type=checkbox] {
+    /* opacity: 0; */
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    border: solid 5px gray;
+    border-collapse: collapse;
+}

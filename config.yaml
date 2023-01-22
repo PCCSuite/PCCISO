@@ -1,0 +1,463 @@
+# Debug mode may cause many logs
+debug: true
+# directory to host and store data
+data_dir: ./data
+# add discord webhook URL to notify status
+#webhook: "https://discord.com/api/webhooks/XXXXXXXXXXXXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+# Use checksum to check local file sanity check
+strict: false
+# task execution time (localtime. If in docker, UTC)
+run_time: "16:00"
+os:
+- id: alpine
+  name: Alpine
+  color: "#0d597f"
+  category: true
+  child:
+  - id: alpine-standard
+    name: Alpine Linux Standard x86_64
+    color: "#36384D"
+    category: false
+    update:
+    - url: "https://alpinelinux.org/downloads/"
+    - regex: 'href="(https:&#x2F;&#x2F;dl-cdn.alpinelinux.org&#x2F;alpine&#x2F;v[0-9.]{1,8}&#x2F;releases&#x2F;x86_64&#x2F;alpine-standard-[0-9.]{1,10}-x86_64.iso)"'
+    update_sum:
+    - url: "$FILEURL.sha256"
+    - sum_regex: '^([0-9a-f]{64}) +$FILENAME'
+      sum_type: "sha256"
+    child:
+    - id: alpine-standard-x86
+      name: Alpine Linux Standard x86
+      color: "#36384D"
+      category: false
+      update:
+      - url: "https://alpinelinux.org/downloads/"
+    - regex: 'href="(https:&#x2F;&#x2F;dl-cdn.alpinelinux.org&#x2F;alpine&#x2F;v[0-9.]{1,8}&#x2F;releases&#x2F;x86&#x2F;alpine-standard-[0-9.]{1,10}-x86.iso)"'
+      update_sum:
+      - url: "$FILEURL.sha256"
+      - sum_regex: '^([0-9a-f]{64}) +$FILENAME'
+        sum_type: "sha256"
+  - id: alpine-extended
+    name: Alpine Linux Extended x86_64
+    color: "#36384D"
+    category: false
+    update:
+    - url: "https://alpinelinux.org/downloads/"
+    - regex: 'href="(https:&#x2F;&#x2F;dl-cdn.alpinelinux.org&#x2F;alpine&#x2F;v[0-9.]{1,8}&#x2F;releases&#x2F;x86_64&#x2F;alpine-extended-[0-9.]{1,10}-x86_64.iso)"'
+    update_sum:
+    - url: "$FILEURL.sha256"
+    - sum_regex: '^([0-9a-f]{64}) +$FILENAME'
+      sum_type: "sha256"
+    child:
+    - id: alpine-extended-x86
+      name: Alpine Linux Extended x86
+      color: "#36384D"
+      category: false
+      update:
+      - url: "https://alpinelinux.org/downloads/"
+    - regex: 'href="(https:&#x2F;&#x2F;dl-cdn.alpinelinux.org&#x2F;alpine&#x2F;v[0-9.]{1,8}&#x2F;releases&#x2F;x86&#x2F;alpine-extended-[0-9.]{1,10}-x86.iso)"'
+      update_sum:
+      - url: "$FILEURL.sha256"
+      - sum_regex: '^([0-9a-f]{64}) +$FILENAME'
+        sum_type: "sha256"
+- id: archlinux
+  name: Arch Linux
+  color: "#2c92d1"
+  category: false
+  update:
+  - url: "https://ftp.jaist.ac.jp/pub/Linux/ArchLinux/iso/latest/"
+  - regex: '<a href="(archlinux-20\d\d\.\d\d\.\d\d-x86_64\.iso)">'
+    regex_select: 0
+  update_sum:
+  - url: "https://ftp.jaist.ac.jp/pub/Linux/ArchLinux/iso/latest/sha256sums.txt"
+  - sum_regex: '^([0-9a-f]{64}) +$FILENAME'
+    sum_type: "sha256"
+  download:
+    valid_regex: 'https://ftp\.jaist\.ac\.jp/pub/Linux/ArchLinux/iso/latest/archlinux-20\d\d\.\d\d\.\d\d-x86_64\.iso'
+  child:
+  - id: archlinux32
+    name: Arch Linux 32
+    color: "#2c92d1"
+    category: false
+    update:
+    - url: "https://mirror.archlinux32.org/archisos/"
+    - regex: '<a href="(archlinux32-20\d\d\.\d\d\.\d\d-i686\.iso)">'
+      regex_select: 0
+    update_sum:
+    - url: "https://mirror.archlinux32.org/archisos/sha512sums"
+    - sum_regex: '^([0-9a-f]{128}) +$FILENAME'
+      sum_type: "sha512"
+    download:
+      valid_regex: 'https://mirror\.archlinux32\.org/archisos/archlinux32-20\d\d\.\d\d\.\d\d-i686\.iso'
+- id: centos-stream
+  name: CentOS Stream
+  color: "#a14f8c"
+  category: false
+  update:
+  - url: "https://ftp.iij.ad.jp/pub/linux/centos-stream/9-stream/BaseOS/x86_64/iso/"
+  - regex: '<a href="(CentOS-Stream-9-\d{8}.\d-x86_64-dvd1.iso)">'
+  update_sum:
+  - url: "$FILEURL.SHA256SUM"
+  - sum_regex: 'SHA256 \($FILENAME\) = ([0-9a-f]{64})'
+    sum_type: "sha256"
+  child:
+  - id: centos-stream-aarch64
+    name: CentOS Stream ARM64
+    color: "#a14f8c"
+    category: false
+    update:
+    - url: "https://ftp.iij.ad.jp/pub/linux/centos-stream/9-stream/BaseOS/aarch64/iso/"
+    - regex: '<a href="(CentOS-Stream-9-\d{8}.\d-aarch64-dvd1.iso)">'
+    update_sum:
+    - url: "$FILEURL.SHA256SUM"
+    - sum_regex: 'SHA256 \($FILENAME\) = ([0-9a-f]{64})'
+      sum_type: "sha256"
+- id: clonezilla
+  name: Clonezilla
+  color: "#EAEAEA"
+  category: true
+  child:
+  - id: clonezilla-amd64-zip
+    name: Clonezilla amd64 zip(for USB)
+    color: "#2c92d1"
+    category: false
+    update:
+    - url: "https://jaist.dl.sourceforge.net/project/clonezilla/clonezilla_live_stable/"
+    - regex: '<a href="([0-9.]{1,8}-[0-9]{1,2}/)">'
+      regex_select: -1
+    - regex: 'href="(clonezilla-live-[0-9.]{1,8}-[0-9]{1,2}-amd64.zip)"'
+    update_sum:
+    - url: "https://clonezilla.org/downloads/stable/data/CHECKSUMS.TXT"
+    - sum_regex: '([0-9a-f]{128}) +$FILENAME'
+      sum_type: "sha512"
+  - id: clonezilla-amd64-iso
+    name: Clonezilla amd64 iso(for CD/DVD)
+    color: "#2c92d1"
+    category: false
+    update:
+    - url: "https://jaist.dl.sourceforge.net/project/clonezilla/clonezilla_live_stable/"
+    - regex: '<a href="([0-9.]{1,8}-[0-9]{1,2}/)">'
+      regex_select: -1
+    - regex: 'href="(clonezilla-live-[0-9.]{1,8}-[0-9]{1,2}-amd64.iso)"'
+    update_sum:
+    - url: "https://clonezilla.org/downloads/stable/data/CHECKSUMS.TXT"
+    - sum_regex: '([0-9a-f]{128}) +$FILENAME'
+      sum_type: "sha512"
+  - id: clonezilla-i686-zip
+    name: Clonezilla i686 zip(for USB)
+    color: "#2c92d1"
+    category: false
+    update:
+    - url: "https://jaist.dl.sourceforge.net/project/clonezilla/clonezilla_live_stable/"
+    - regex: '<a href="([0-9.]{1,8}-[0-9]{1,2}/)">'
+      regex_select: -1
+    - regex: 'href="(clonezilla-live-[0-9.]{1,8}-[0-9]{1,2}-i686.zip)"'
+    update_sum:
+    - url: "https://clonezilla.org/downloads/stable/data/CHECKSUMS.TXT"
+    - sum_regex: '([0-9a-f]{128}) +$FILENAME'
+      sum_type: "sha512"
+  - id: clonezilla-i686-iso
+    name: Clonezilla i686 iso(for CD/DVD)
+    color: "#2c92d1"
+    category: false
+    update:
+    - url: "https://jaist.dl.sourceforge.net/project/clonezilla/clonezilla_live_stable/"
+    - regex: '<a href="([0-9.]{1,8}-[0-9]{1,2}/)">'
+      regex_select: -1
+    - regex: 'href="(clonezilla-live-[0-9.]{1,8}-[0-9]{1,2}-i686.iso)"'
+    update_sum:
+    - url: "https://clonezilla.org/downloads/stable/data/CHECKSUMS.TXT"
+    - sum_regex: '([0-9a-f]{128}) +$FILENAME'
+      sum_type: "sha512"
+- id: debian
+  name: Debian
+  color: "#c70036"
+  category: false
+  update:
+  - url: "https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/"
+  - regex: 'href="(debian-live-[0-9.]{1,8}-amd64-standard.iso)"'
+    regex_select: 0
+  update_sum:
+  - url: "https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/SHA512SUMS"
+  - sum_regex: '([0-9a-f]{128}) +$FILENAME'
+    sum_type: "sha512"
+  child:
+  - id: debian-i386
+    name: Debian i386
+    color: "#c70036"
+    category: false
+    update:
+    - url: "https://cdimage.debian.org/debian-cd/current-live/i386/iso-hybrid/"
+    - regex: 'href="(debian-live-[0-9.]{1,8}-i386-standard.iso)"'
+      regex_select: 0
+    update_sum:
+    - url: "https://cdimage.debian.org/debian-cd/current-live/i386/iso-hybrid/SHA512SUMS"
+    - sum_regex: '([0-9a-f]{128}) +$FILENAME'
+      sum_type: "sha512"
+- id: fedora
+  name: Fedora
+  color: "#51a2da"
+  category: true
+  child:
+  - id: fedora-workstation
+    name: Fedora Workstation
+    color: "#61b921"
+    category: false
+    update:
+    - url: "https://getfedora.org/ja/workstation/download/"
+    - regex: 'href="(https://download\.fedoraproject\.org/pub/fedora/linux/releases/\d{1,3}/Workstation/x86_64/iso/Fedora-Workstation-Live-x86_64-\d{1,3}-[0-9.]{1,8}\.iso)"'
+    update_sum:
+    - url: "https://getfedora.org/ja/security/"
+    - regex: 'href="(/static/checksums/\d{1,3}/iso/Fedora-Workstation-\d{1,3}-[0-9.]{1,8}-x86_64-CHECKSUM)"'
+    - sum_regex: 'SHA256 \($FILENAME\) = ([0-9a-f]{64})'
+      sum_type: "sha256"
+  - id: fedora-server
+    name: Fedora Server
+    color: "#c27c18"
+    category: false
+    update:
+    - url: "https://getfedora.org/ja/server/download/"
+    - regex: 'href="(https://download\.fedoraproject\.org/pub/fedora/linux/releases/\d{1,3}/Server/x86_64/iso/Fedora-Server-dvd-x86_64-\d{1,3}-[0-9.]{1,8}\.iso)"'
+    update_sum:
+    - url: "https://getfedora.org/ja/security/"
+    - regex: 'href="(/static/checksums/\d{1,3}/iso/Fedora-Server-\d{1,3}-[0-9.]{1,8}-x86_64-CHECKSUM)"'
+    - sum_regex: 'SHA256 \($FILENAME\) = ([0-9a-f]{64})'
+      sum_type: "sha256"
+- id: gparted
+  name: GParted
+  color: "#e3ffc3"
+  category: false
+  update:
+  - url: "https://jaist.dl.sourceforge.net/project/gparted/gparted-live-stable/"
+  - regex: '<a href="([0-9.]{1,8}-[0-9]/)">'
+    regex_select: -1
+  - regex: 'href="(gparted-live-[0-9.]{1,8}-[0-9]-amd64.iso)"'
+  update_sum:
+  - url: "https://gparted.org/gparted-live/stable/CHECKSUMS.TXT"
+  - sum_regex: '([0-9a-f]{128}) +$FILENAME'
+    sum_type: "sha512"
+  child:
+  - id: gparted-i386
+    name: GParted for i686
+    color: "#e3ffc3"
+    category: false
+    update:
+    - url: "https://jaist.dl.sourceforge.net/project/gparted/gparted-live-stable/"
+    - regex: '<a href="([0-9.]{1,8}-[0-9]/)">'
+      regex_select: -1
+    - regex: 'href="(gparted-live-[0-9.]{1,8}-[0-9]-i686.iso)"'
+    update_sum:
+    - url: "https://gparted.org/gparted-live/stable/CHECKSUMS.TXT"
+    - sum_regex: '([0-9a-f]{128}) +$FILENAME'
+      sum_type: "sha512"
+- id: manjaro
+  name: Manjaro
+  color: "#1de9b6"
+  category: true
+  child:
+  - id: manjaro-kde-full
+    name: Manjaro Plasma Desktop Full
+    color: "#1de9b6"
+    category: false
+    update:
+    - url: "https://manjaro.org/download/"
+    - regex: 'href="(https://download.manjaro.org/kde/[0-9.]{1,8}/manjaro-kde-[0-9.]{1,8}-\d{6}-linux\d{1,3}.iso)"'
+    update_sum:
+    - url: "$FILEURL.sha1"
+    - sum_regex: '^([0-9a-f]{40}) +$FILENAME'
+      sum_type: "sha1"
+  - id: manjaro-kde-minimal
+    name: Manjaro Plasma Desktop Minimal
+    color: "#1de9b6"
+    category: false
+    update:
+    - url: "https://manjaro.org/download/"
+    - regex: 'href="(https://download.manjaro.org/kde/[0-9.]{1,8}/manjaro-kde-[0-9.]{1,8}-minimal-\d{6}-linux\d{1,3}.iso)"'
+    update_sum:
+    - url: "$FILEURL.sha1"
+    - sum_regex: '^([0-9a-f]{40}) +$FILENAME'
+      sum_type: "sha1"
+  - id: manjaro-xfce-full
+    name: Manjaro Xfce Desktop Full
+    color: "#1de9b6"
+    category: false
+    update:
+    - url: "https://manjaro.org/download/"
+    - regex: 'href="(https://download.manjaro.org/xfce/[0-9.]{1,8}/manjaro-xfce-[0-9.]{1,8}-\d{6}-linux\d{1,3}.iso)"'
+    update_sum:
+    - url: "$FILEURL.sha1"
+    - sum_regex: '^([0-9a-f]{40}) +$FILENAME'
+      sum_type: "sha1"
+  - id: manjaro-xfce-minimal
+    name: Manjaro Xfce Desktop Minimal
+    color: "#1de9b6"
+    category: false
+    update:
+    - url: "https://manjaro.org/download/"
+    - regex: 'href="(https://download.manjaro.org/xfce/[0-9.]{1,8}/manjaro-xfce-[0-9.]{1,8}-minimal-\d{6}-linux\d{1,3}.iso)"'
+    update_sum:
+    - url: "$FILEURL.sha1"
+    - sum_regex: '^([0-9a-f]{40}) +$FILENAME'
+      sum_type: "sha1"
+  - id: manjaro-gnome-full
+    name: Manjaro GNOME Desktop Full
+    color: "#1de9b6"
+    category: false
+    update:
+    - url: "https://manjaro.org/download/"
+    - regex: 'href="(https://download.manjaro.org/gnome/[0-9.]{1,8}/manjaro-gnome-[0-9.]{1,8}-\d{6}-linux\d{1,3}.iso)"'
+    update_sum:
+    - url: "$FILEURL.sha1"
+    - sum_regex: '^([0-9a-f]{40}) +$FILENAME'
+      sum_type: "sha1"
+  - id: manjaro-gnome-minimal
+    name: Manjaro GNOME Desktop Minimal
+    color: "#1de9b6"
+    category: false
+    update:
+    - url: "https://manjaro.org/download/"
+    - regex: 'href="(https://download.manjaro.org/gnome/[0-9.]{1,8}/manjaro-gnome-[0-9.]{1,8}-minimal-\d{6}-linux\d{1,3}.iso)"'
+    update_sum:
+    - url: "$FILEURL.sha1"
+    - sum_regex: '^([0-9a-f]{40}) +$FILENAME'
+      sum_type: "sha1"
+- id: opensuse-tumbleweed
+  name: openSUSE Tumbleweed
+  color: "#36b9ab"
+  category: false
+  update:
+  - url: "https://download.opensuse.org/tumbleweed/iso/openSUSE-Tumbleweed-DVD-x86_64-Current.iso"
+  update_sum:
+  - url: "$FILEURL.sha256"
+  - sum_regex: '([0-9a-f]{64}) +$FILENAME'
+    sum_type: "sha256"
+  child:
+  - id: opensuse-tumbleweed-aarch64
+    name: openSUSE Tumbleweed ARM64
+    color: "#36b9ab"
+    category: false
+    update:
+    - url: "https://download.opensuse.org/ports/aarch64/tumbleweed/iso/openSUSE-Tumbleweed-DVD-aarch64-Current.iso"
+    update_sum:
+    - url: "$FILEURL.sha256"
+    - sum_regex: '([0-9a-f]{64}) +$FILENAME'
+      sum_type: "sha256"
+- id: proxmox
+  name: Proxmox Virtual Environment
+  color: "#f16d1a"
+  category: false
+  update:
+  - url: "https://www.proxmox.com/en/downloads/category/iso-images-pve"
+  - regex: 'href="(/en/downloads\?task=callelement&amp;format=raw&amp;item_id=\d{1,5}&amp;element=[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}&amp;method=download&amp;args\[0\]=[0-9a-f]{32})"'
+  update_sum:
+  - url: "https://www.proxmox.com/en/downloads/category/iso-images-pve"
+  - regex: 'href="(/en/downloads/item/proxmox-ve-[0-9-]{1,8}-iso-installer)"'
+  - sum_regex: '<p>SHA256SUMS for the ISO:</p>\r\n<p>([0-9a-f]{64})</p>'
+    sum_type: "sha256"
+- id: raspberrypi
+  name: Raspberry Pi OS
+  color: "#cd2355"
+  category: true
+  update:
+  - url: "https://downloads.raspberrypi.org/imager/imager_latest.exe"
+  child:
+  - id: raspberrypi-desktop
+    name: Raspberry Pi OS with desktop
+    color: "#cd2355"
+    category: false
+    update:
+    - url: "https://downloads.raspberrypi.org/raspios_armhf/images/"
+    - regex: '<a href="(raspios_armhf-20\d\d-\d\d-\d\d/)">'
+      regex_select: -1
+    - regex: '<a href="(20\d\d-\d\d-\d\d-raspios-bullseye-armhf\.img\.xz)">'
+      regex_select: 0
+    update_sum:
+    - url: "$FILEURL.sha256"
+    - sum_regex: '^([0-9a-f]{64}) +$FILENAME'
+      sum_type: "sha256"
+  - id: raspberrypi-lite
+    name: Raspberry Pi OS Lite
+    color: "#cd2355"
+    category: false
+    update:
+    - url: "https://downloads.raspberrypi.org/raspios_lite_armhf/images/"
+    - regex: '<a href="(raspios_lite_armhf-20\d\d-\d\d-\d\d/)">'
+      regex_select: -1
+    - regex: '<a href="(20\d\d-\d\d-\d\d-raspios-bullseye-armhf-lite\.img\.xz)">'
+      regex_select: 0
+    update_sum:
+    - url: "$FILEURL.sha256"
+    - sum_regex: '^([0-9a-f]{64}) +$FILENAME'
+      sum_type: "sha256"
+- id: rocky
+  name: Rocky Linux
+  color: "#35b881"
+  category: false
+  update:
+  - url: "https://download.rockylinux.org/pub/rocky/9/isos/x86_64/"
+  - regex: '<a href="(Rocky-[0-9.]{1,8}-x86_64-dvd.iso)">'
+  update_sum:
+  - url: "$FILEURL.CHECKSUM"
+  - sum_regex: 'SHA256 \($FILENAME\) = ([0-9a-f]{64})'
+    sum_type: "sha256"
+  child:
+  - id: rocky-aarch64
+    name: Rocky Linux for ARM64
+    color: "#35b881"
+    category: false
+    update:
+    - url: "https://download.rockylinux.org/pub/rocky/9/isos/aarch64/"
+    - regex: '<a href="(Rocky-[0-9.]{1,8}-aarch64-dvd.iso)">'
+    update_sum:
+    - url: "$FILEURL.CHECKSUM"
+    - sum_regex: 'SHA256 \($FILENAME\) = ([0-9a-f]{64})'
+      sum_type: "sha256"
+- id: ubuntu
+  name: Ubuntu
+  color: "#e95420"
+  category: true
+  child:
+  - id: ubuntu-2204-desktop
+    name: Ubuntu 22.04 LTS Desktop
+    color: "#e95420"
+    category: false
+    update:
+    - url: "https://releases.ubuntu.com/22.04/"
+    - regex: 'href="(ubuntu-22.04.\d{1,3}-desktop-amd64.iso)"'
+    update_sum:
+    - url: "https://releases.ubuntu.com/22.04/SHA256SUMS"
+    - sum_regex: '([0-9a-f]{64}) +\*$FILENAME'
+      sum_type: "sha256"
+  - id: ubuntu-2204-server
+    name: Ubuntu 22.04 LTS Server
+    color: "#e95420"
+    category: false
+    update:
+    - url: "https://releases.ubuntu.com/22.04/"
+    - regex: 'href="(ubuntu-22.04.\d{1,3}-live-server-amd64.iso)"'
+    update_sum:
+    - url: "https://releases.ubuntu.com/22.04/SHA256SUMS"
+    - sum_regex: '([0-9a-f]{64}) +\*$FILENAME'
+      sum_type: "sha256"
+  - id: ubuntu-2210-desktop
+    name: Ubuntu 22.10 LTS Desktop
+    color: "#e95420"
+    category: false
+    update:
+    - url: "https://releases.ubuntu.com/22.10/"
+    - regex: 'href="(ubuntu-22.10.?\d{0,3}-desktop-amd64.iso)"'
+    update_sum:
+    - url: "https://releases.ubuntu.com/22.10/SHA256SUMS"
+    - sum_regex: '([0-9a-f]{64}) +\*$FILENAME'
+      sum_type: "sha256"
+  - id: ubuntu-2210-server
+    name: Ubuntu 22.10 LTS Server
+    color: "#e95420"
+    category: false
+    update:
+    - url: "https://releases.ubuntu.com/22.10/"
+    - regex: 'href="(ubuntu-22.10.?\d{0,3}-live-server-amd64.iso)"'
+    update_sum:
+    - url: "https://releases.ubuntu.com/22.10/SHA256SUMS"
+    - sum_regex: '([0-9a-f]{64}) +\*$FILENAME'
+      sum_type: "sha256"

@@ -1,0 +1,15 @@
+version: '3'
+services:
+  pcciso:
+    image: "ghcr.io/pccsuite/pcciso"
+    volumes:
+      - type: bind
+        source: config.yaml
+        target: /work/config.yaml
+      - type: bind
+        source: ${PCC_ISO_DATA}
+        target: /work/data/
+    # ports:
+    #   - 8080:8007
+    restart: unless-stopped
+    # pull_policy: always

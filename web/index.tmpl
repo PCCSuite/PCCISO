@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/style.css" rel="stylesheet" type="text/css" media="all">
+    <style>
+:root {
+    --theme-color: #123456;
+}
+    </style>
+    <title>PCCISO倉庫</title>
+</head>
+<body>
+    <h1>ISO倉庫</h1>
+    <p class="backcolor">─── 神は「ISO倉庫あれ」と言われた。するとISO倉庫があった。</p>
+    <h2>OS</h2>
+    {{range .}}
+    <a class="os" href="{{.Id}}/" style="--os-back-color: {{.Color}}88; --os-hover-color: {{.Color}}aa;">
+        <img class="os-icon" src="{{.IconPath}}">
+        <span class="os-name">{{.Name}}</span>
+    </a>
+    {{end}}
+</body>
+</html>
