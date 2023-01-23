@@ -52,16 +52,17 @@ file_loop:
 	for _, v := range Os.MetaData.Files {
 		realFile, ok := realFiles[v.Name]
 		if !ok {
+			log.Print("File not found: ", filepath.Join(path, v.Name))
 			result.NotFound++
 			continue
 		}
 		delete(realFiles, v.Name)
 		if v.Size != realFile.Size() {
 			result.Corrupted++
-			log.Print("size verification failed: ", filepath.Join(path, v.Name))
+			log.Print("Size verification failed: ", filepath.Join(path, v.Name))
 			err := os.Remove(filepath.Join(path, v.Name))
 			if err != nil {
-				log.Print("failed to remove corrupted file: ", filepath.Join(path, v.Name))
+				log.Print("Failed to remove corrupted file: ", filepath.Join(path, v.Name))
 			}
 			continue
 		}
@@ -77,10 +78,10 @@ file_loop:
 			}
 			if !valid {
 				result.Corrupted++
-				log.Print("sum verification failed: ", filepath.Join(path, v.Name))
+				log.Print("Sum verification failed: ", filepath.Join(path, v.Name))
 				err := os.Remove(filepath.Join(path, v.Name))
 				if err != nil {
-					log.Print("failed to remove corrupted file: ", filepath.Join(path, v.Name))
+					log.Print("Failed to remove corrupted file: ", filepath.Join(path, v.Name))
 				}
 				continue
 			}
