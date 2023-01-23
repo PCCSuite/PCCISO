@@ -12,13 +12,13 @@ strict: false
 run_time: "16:00"
 os:
 - id: alpine
-  name: Alpine
+  name: Alpine Linux
   color: "#0d597f"
   category: true
   child:
-  - id: alpine-standard
+  - id: alpine-standard-x86-64
     name: Alpine Linux Standard x86_64
-    color: "#36384D"
+    color: "#0d597f"
     category: false
     update:
     - url: "https://alpinelinux.org/downloads/"
@@ -27,21 +27,20 @@ os:
     - url: "$FILEURL.sha256"
     - sum_regex: '^([0-9a-f]{64}) +$FILENAME'
       sum_type: "sha256"
-    child:
-    - id: alpine-standard-x86
-      name: Alpine Linux Standard x86
-      color: "#36384D"
-      category: false
-      update:
-      - url: "https://alpinelinux.org/downloads/"
+  - id: alpine-standard-x86
+    name: Alpine Linux Standard x86
+    color: "#0d597f"
+    category: false
+    update:
+    - url: "https://alpinelinux.org/downloads/"
     - regex: 'href="(https:&#x2F;&#x2F;dl-cdn.alpinelinux.org&#x2F;alpine&#x2F;v[0-9.]{1,8}&#x2F;releases&#x2F;x86&#x2F;alpine-standard-[0-9.]{1,10}-x86.iso)"'
-      update_sum:
-      - url: "$FILEURL.sha256"
-      - sum_regex: '^([0-9a-f]{64}) +$FILENAME'
-        sum_type: "sha256"
-  - id: alpine-extended
+    update_sum:
+    - url: "$FILEURL.sha256"
+    - sum_regex: '^([0-9a-f]{64}) +$FILENAME'
+      sum_type: "sha256"
+  - id: alpine-extended-x86-64
     name: Alpine Linux Extended x86_64
-    color: "#36384D"
+    color: "#0d597f"
     category: false
     update:
     - url: "https://alpinelinux.org/downloads/"
@@ -50,18 +49,17 @@ os:
     - url: "$FILEURL.sha256"
     - sum_regex: '^([0-9a-f]{64}) +$FILENAME'
       sum_type: "sha256"
-    child:
-    - id: alpine-extended-x86
-      name: Alpine Linux Extended x86
-      color: "#36384D"
-      category: false
-      update:
-      - url: "https://alpinelinux.org/downloads/"
+  - id: alpine-extended-x86
+    name: Alpine Linux Extended x86
+    color: "#0d597f"
+    category: false
+    update:
+    - url: "https://alpinelinux.org/downloads/"
     - regex: 'href="(https:&#x2F;&#x2F;dl-cdn.alpinelinux.org&#x2F;alpine&#x2F;v[0-9.]{1,8}&#x2F;releases&#x2F;x86&#x2F;alpine-extended-[0-9.]{1,10}-x86.iso)"'
-      update_sum:
-      - url: "$FILEURL.sha256"
-      - sum_regex: '^([0-9a-f]{64}) +$FILENAME'
-        sum_type: "sha256"
+    update_sum:
+    - url: "$FILEURL.sha256"
+    - sum_regex: '^([0-9a-f]{64}) +$FILENAME'
+      sum_type: "sha256"
 - id: archlinux
   name: Arch Linux
   color: "#2c92d1"
@@ -442,7 +440,7 @@ os:
     - sum_regex: '([0-9a-f]{64}) +\*$FILENAME'
       sum_type: "sha256"
   - id: ubuntu-2210-desktop
-    name: Ubuntu 22.10 LTS Desktop
+    name: Ubuntu 22.10 Desktop
     color: "#e95420"
     category: false
     update:
@@ -453,7 +451,7 @@ os:
     - sum_regex: '([0-9a-f]{64}) +\*$FILENAME'
       sum_type: "sha256"
   - id: ubuntu-2210-server
-    name: Ubuntu 22.10 LTS Server
+    name: Ubuntu 22.10 Server
     color: "#e95420"
     category: false
     update:
