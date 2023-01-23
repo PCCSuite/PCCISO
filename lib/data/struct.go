@@ -11,12 +11,13 @@ import (
 )
 
 type Config struct {
-	Debug   bool   `yaml:"debug"`
-	DataDir string `yaml:"data_dir"`
-	Webhook string `yaml:"webhook"`
-	Strict  bool   `yaml:"strict"`
-	RunTime string `yaml:"run_time"`
-	Os      []*Os  `yaml:"os"`
+	Debug    bool   `yaml:"debug"`
+	DataDir  string `yaml:"data_dir"`
+	HttpRoot string `yaml:"http_root"`
+	Webhook  string `yaml:"webhook"`
+	Strict   bool   `yaml:"strict"`
+	RunTime  string `yaml:"run_time"`
+	Os       []*Os  `yaml:"os"`
 }
 
 type Os struct {
@@ -45,7 +46,7 @@ func (Os *Os) IconPath() string {
 		cutIndex := strings.LastIndex(iconDir, "/")
 		iconDir = iconDir[:cutIndex]
 	}
-	return iconDir + "/icon.png"
+	return strings.TrimSuffix(Conf.HttpRoot, "/") + iconDir + "/icon.png"
 }
 
 type FlowStep struct {

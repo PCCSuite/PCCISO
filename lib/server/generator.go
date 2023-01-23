@@ -28,6 +28,7 @@ func GenerateIndexPage() {
 }
 
 type OsPageInfo struct {
+	Root     string
 	OsName   string
 	Color    string
 	Pinned   []FileInfo
@@ -52,6 +53,7 @@ func GenerateOsPage(Os *data.Os) {
 	}
 	defer file.Close()
 	info := OsPageInfo{
+		Root:     data.Conf.HttpRoot,
 		OsName:   Os.Name,
 		Color:    Os.Color,
 		Pinned:   []FileInfo{},

@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {{$root := .Root}}
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/style.css" rel="stylesheet" type="text/css" media="all">
+    <link href="{{$root}}style.css" rel="stylesheet" type="text/css" media="all">
     <style>
 :root {
     --theme-color: {{.Color}};
@@ -23,7 +24,7 @@
             <div class="special-filename">{{.Name}}</div>
             <div>ファイルサイズ: {{.SizeString}}</div>
             <div>取得日時: {{.GetTimeString}}</div>
-            <a class="special-hash hash"><span>SHA512: </span><input class="hash-value" value="{{.SHA512}}" readonly><img class="copy" src="/copy-icon.png"></a>
+            <a class="special-hash hash"><span>SHA512: </span><input class="hash-value" value="{{.SHA512}}" readonly><img class="copy" src="{{$root}}copy-icon.png"></a>
         </div>
     </a>
     {{end}}
@@ -37,7 +38,7 @@
             <div class="special-filename">{{.Name}}</div>
             <div>ファイルサイズ: {{.SizeString}}</div>
             <div>取得日時: {{.GetTimeString}}</div>
-            <a class="special-hash hash"><span>SHA512: </span><input class="hash-value" value="{{.SHA512}}" readonly><img class="copy" src="/copy-icon.png"></a>
+            <a class="special-hash hash"><span>SHA512: </span><input class="hash-value" value="{{.SHA512}}" readonly><img class="copy" src="{{$root}}copy-icon.png"></a>
         </div>
     </a>
     {{end}}
@@ -70,7 +71,7 @@
                 <div class="table-cell"><a href="{{.Path}}">{{.Name}}</a></div>
                 <div class="table-cell"><a href="{{.Path}}">{{.SizeString}}</a></div>
                 <div class="table-cell"><a href="{{.Path}}">{{.GetTimeString}}</a></div>
-                <div class="table-cell hash"><input class="hash-value" value="{{.SHA512}}" readonly><img class="copy" src="/copy-icon.png"></div>
+                <div class="table-cell hash"><input class="hash-value" value="{{.SHA512}}" readonly><img class="copy" src="{{$root}}/copy-icon.png"></div>
             </div>
     {{end}}
         </div>

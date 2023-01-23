@@ -2,6 +2,8 @@
 debug: true
 # directory to host and store data
 data_dir: ./data
+# http root
+http_root: /iso/
 # add discord webhook URL to notify status
 #webhook: "https://discord.com/api/webhooks/XXXXXXXXXXXXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 # Use checksum to check local file sanity check

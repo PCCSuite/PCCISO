@@ -38,7 +38,10 @@ func PlaceDefaultFiles() {
 
 func StartServer() {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", serveStatic)
+	mux.HandleFunc(data.Conf.HttpRoot, serveStatic)
+	if data.Conf.HttpRoot != "/" {
+		mux.Handle("/", http.RedirectHandler(data.Conf.HttpRoot, http.StatusFound))
+	}
 
 	log.Print("Server starting")
 	log.Print(http.ListenAndServe("127.0.0.1:8080", mux))
