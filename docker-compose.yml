@@ -12,4 +12,4 @@ services:
     # ports:
     #   - 8080:8007
     restart: unless-stopped
-    # pull_policy: always
+    pull_policy: always
