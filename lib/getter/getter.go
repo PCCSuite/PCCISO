@@ -118,17 +118,27 @@ func GetChecksum(Os *data.Os, fileURL *url.URL) *data.CheckSum {
 }
 
 func getRequest(url string) ([]byte, error) {
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, fmt.Errorf("failed to get: %w", err)
+	var lastErr error
+	for i := 0; i < data.Conf.Retry; i++ {
+		resp, err := http.Get(url)
+		if err != nil {
+			lastErr = fmt.Errorf("failed to get: %w", err)
+			log.Print("Retrying: ", lastErr)
+			continue
+		}
+		defer resp.Body.Close()
+		raw, err := io.ReadAll(resp.Body)
+		if err != nil {
+			lastErr = fmt.Errorf("failed read responce: %w", err)
+			log.Print("Retrying: ", lastErr)
+			continue
+		}
+		if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+			lastErr = errors.New(fmt.Sprint("status code not success: ", resp.StatusCode))
+			log.Print("Retrying: ", lastErr)
+			continue
+		}
+		return raw, nil
 	}
-	defer resp.Body.Close()
-	raw, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, fmt.Errorf("failed read responce: %w", err)
-	}
-	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		return raw, errors.New(fmt.Sprint("status code not success: ", resp.StatusCode))
-	}
-	return raw, nil
+	return nil, lastErr
 }

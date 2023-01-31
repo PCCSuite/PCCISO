@@ -10,6 +10,8 @@ http_root: /iso/
 strict: false
 # task execution time (localtime. If in docker, UTC)
 run_time: "16:00"
+# limit of retrying HTTP request
+retry: 5
 os:
 - id: alpine
   name: Alpine Linux

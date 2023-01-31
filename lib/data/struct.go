@@ -17,6 +17,7 @@ type Config struct {
 	Webhook  string `yaml:"webhook"`
 	Strict   bool   `yaml:"strict"`
 	RunTime  string `yaml:"run_time"`
+	Retry    int    `yaml:"retry"`
 	Os       []*Os  `yaml:"os"`
 }
 
