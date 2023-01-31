@@ -32,8 +32,8 @@ a {
 }
 .os-name {
     font-size: xx-large;
-    font-family: 'Courier New', Courier, monospace;
-    /* font-family: monospace; */
+    font-family: monospace;
+    padding-left: 15px;
 }
 
 .os:hover {
