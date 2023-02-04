@@ -123,7 +123,7 @@ func getRequest(url string) ([]byte, error) {
 	for i := 0; i < data.Conf.Retry; i++ {
 		if i != 0 {
 			log.Print("Error, retrying...: ", lastErr)
-			time.Sleep(1 * time.Millisecond)
+			time.Sleep(2 * time.Second)
 		}
 		resp, err := http.Get(url)
 		if err != nil {
