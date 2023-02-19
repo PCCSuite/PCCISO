@@ -19,7 +19,7 @@ func ExecPeriodic() {
 }
 
 func ScanAllFiles() (scanResult data.ScanFilesResult) {
-	for _, v := range data.Conf.Os {
+	for _, v := range data.OsList {
 		scanFiles(v, &scanResult)
 	}
 	return
@@ -41,7 +41,7 @@ type UpdateResults struct {
 }
 
 func UpdateAllOs() (result UpdateResults) {
-	for _, v := range data.Conf.Os {
+	for _, v := range data.OsList {
 		updateOs(v, &result)
 	}
 	return
@@ -81,7 +81,7 @@ func GenerateAllPages() (success bool) {
 		}
 	}()
 	server.GenerateIndexPage()
-	for _, v := range data.Conf.Os {
+	for _, v := range data.OsList {
 		generatePage(v)
 	}
 	success = true

@@ -21,7 +21,7 @@ func GenerateIndexPage() {
 	}
 	defer file.Close()
 
-	err = tmpl.Execute(file, data.Conf.Os)
+	err = tmpl.Execute(file, data.OsList)
 	if err != nil {
 		log.Panic("Failed to exec tmpl: ", err)
 	}

@@ -11,8 +11,11 @@ import (
 )
 
 const configFile = "./config.yaml"
+const osFile = "./os.yaml"
 
 var Conf Config
+
+var OsList []*Os
 
 func init() {
 	file, err := os.ReadFile(configFile)
@@ -24,11 +27,20 @@ func init() {
 		log.Fatal("Config parse failed:", err)
 	}
 
+	file, err = os.ReadFile(osFile)
+	if err != nil {
+		log.Fatal("OS list load failed:", err)
+	}
+	err = yaml.Unmarshal(file, &OsList)
+	if err != nil {
+		log.Fatal("Config parse failed:", err)
+	}
+
 	if Conf.Debug {
 		log.Print("Debug is enabled")
 	}
 
-	for _, v := range Conf.Os {
+	for _, v := range OsList {
 		processOsData(v, "")
 	}
 }
