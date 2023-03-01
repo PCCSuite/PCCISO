@@ -7,6 +7,9 @@ services:
         source: config.yaml
         target: /work/config.yaml
       - type: bind
+        source: os.yaml
+        target: /work/os.yaml
+      - type: bind
         source: ${PCC_ISO_DATA}
         target: /work/data/
     # ports:
