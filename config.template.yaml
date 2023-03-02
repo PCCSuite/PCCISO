@@ -12,3 +12,5 @@ strict: false
 run_time: "16:00"
 # limit of retrying HTTP request
 retry: 5
+# limit to save versions per os
+limit: 5

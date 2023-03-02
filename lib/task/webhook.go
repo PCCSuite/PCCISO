@@ -29,7 +29,7 @@ type EmbedField struct {
 	Value string `json:"value"`
 }
 
-func NotifyResult(scanResult data.ScanFilesResult, update UpdateResults, pages bool) {
+func NotifyResult(scanResult data.ScanFilesResult, update UpdateResults, limit data.LimitFilesResult, pages bool) {
 	if data.Conf.Webhook == "" {
 		return
 	}
@@ -41,6 +41,9 @@ func NotifyResult(scanResult data.ScanFilesResult, update UpdateResults, pages b
 		ok = false
 	}
 	if update.Failed != 0 {
+		ok = false
+	}
+	if limit.Failed != 0 {
 		ok = false
 	}
 	if ok {
@@ -55,6 +58,10 @@ func NotifyResult(scanResult data.ScanFilesResult, update UpdateResults, pages b
 	embed.Fields = append(embed.Fields, EmbedField{
 		Name:  "Update Data",
 		Value: fmt.Sprintf("Done: %d\nSkipped with matched sum: %d\nSkipped with matched name: %d\nFailed: %d\nSkipped with no update setting: %d", update.Done, update.SkippedSum, update.SkippedName, update.Failed, update.SkippedNoProcess),
+	})
+	embed.Fields = append(embed.Fields, EmbedField{
+		Name:  "Data Sanity Check",
+		Value: fmt.Sprintf("Passed: %d\nDeleted: %d\nFailed: %d", limit.Pass, limit.Deleted, limit.Failed),
 	})
 	if pages {
 		embed.Fields = append(embed.Fields, EmbedField{

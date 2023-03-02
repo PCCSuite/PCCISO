@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"sort"
 
 	"github.com/PCCSuite/PCCISO/lib/util"
 )
@@ -94,5 +95,42 @@ file_loop:
 		log.Print("Unknown file detected: ", filepath.Join(Os.Path, k))
 		result.Unknown++
 	}
+	SaveOsMeta(Os)
+}
+
+type LimitFilesResult struct {
+	Pass    int
+	Deleted int
+	Failed  int
+}
+
+func LimitFiles(Os *Os, result *LimitFilesResult) {
+	if len(Os.MetaData.Files) <= Conf.Limit {
+		result.Pass += len(Os.MetaData.Files)
+		return
+	}
+
+	path := filepath.Join(Conf.DataDir, Os.Path)
+
+	sort.Slice(Os.MetaData.Files, (func(i, j int) bool {
+		return Os.MetaData.Files[i].GetTime.Before(Os.MetaData.Files[j].GetTime)
+	}))
+
+	result.Pass += Conf.Limit
+
+	var newFiles []*FileData
+
+	for _, v := range Os.MetaData.Files[:len(Os.MetaData.Files)-Conf.Limit] {
+		err := os.Remove(filepath.Join(path, v.Name))
+		if err != nil {
+			newFiles = append(newFiles, v)
+			log.Print("Failed to remove old file: ", filepath.Join(path, v.Name))
+			result.Failed++
+			continue
+		}
+		result.Deleted++
+	}
+
+	Os.MetaData.Files = append(newFiles, Os.MetaData.Files[len(Os.MetaData.Files)-Conf.Limit:]...)
 	SaveOsMeta(Os)
 }

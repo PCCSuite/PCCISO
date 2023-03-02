@@ -18,6 +18,7 @@ type Config struct {
 	Strict   bool   `yaml:"strict"`
 	RunTime  string `yaml:"run_time"`
 	Retry    int    `yaml:"retry"`
+	Limit    int    `yaml:"limit"`
 }
 
 type Os struct {

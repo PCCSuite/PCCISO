@@ -13,9 +13,11 @@ func ExecPeriodic() {
 	log.Print("Scan Result: ", scanResult)
 	updateResult := UpdateAllOs()
 	log.Print("Update Result: ", updateResult)
+	limitResult := LimitAllFiles()
+	log.Print("Limit file num result: ", limitResult)
 	generateResult := GenerateAllPages()
 	log.Print("Page generation result: ", generateResult)
-	NotifyResult(scanResult, updateResult, generateResult)
+	NotifyResult(scanResult, updateResult, limitResult, generateResult)
 }
 
 func ScanAllFiles() (scanResult data.ScanFilesResult) {
@@ -29,6 +31,20 @@ func scanFiles(Os *data.Os, result *data.ScanFilesResult) {
 	data.ScanFiles(Os, result)
 	for _, v := range Os.Child {
 		scanFiles(v, result)
+	}
+}
+
+func LimitAllFiles() (limitResult data.LimitFilesResult) {
+	for _, v := range data.OsList {
+		limitFiles(v, &limitResult)
+	}
+	return
+}
+
+func limitFiles(Os *data.Os, result *data.LimitFilesResult) {
+	data.LimitFiles(Os, result)
+	for _, v := range Os.Child {
+		limitFiles(v, result)
 	}
 }
 
