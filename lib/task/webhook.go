@@ -60,7 +60,7 @@ func NotifyResult(scanResult data.ScanFilesResult, update UpdateResults, limit d
 		Value: fmt.Sprintf("Done: %d\nSkipped with matched sum: %d\nSkipped with matched name: %d\nFailed: %d\nSkipped with no update setting: %d", update.Done, update.SkippedSum, update.SkippedName, update.Failed, update.SkippedNoProcess),
 	})
 	embed.Fields = append(embed.Fields, EmbedField{
-		Name:  "Data Sanity Check",
+		Name:  "Limiting Number of Version",
 		Value: fmt.Sprintf("Passed: %d\nDeleted: %d\nFailed: %d", limit.Pass, limit.Deleted, limit.Failed),
 	})
 	if pages {
