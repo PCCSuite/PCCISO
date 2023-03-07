@@ -22,7 +22,7 @@ func TaskScheduler() {
 	for {
 		next := time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), hour, min, 0, 0, time.Local)
 		if next.Before(time.Now()) {
-			next = time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day()+1, hour, min, 0, 0, time.Local)
+			next = next.Add(24 * time.Hour)
 		}
 		log.Printf("Task waiting until %s for %s", next.Format(time.RFC3339), time.Until(next))
 		time.Sleep(time.Until(next))
